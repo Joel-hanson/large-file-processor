@@ -2,27 +2,18 @@
 Run the test using the command py.test
 """
 import pytest  # noqa
-from sqlalchemy import create_engine
-from main import main, get_product_count, get_duplicate_count
+from main import DataPipeline
 
-
-
-db_string = "postgresql://postgres:password@localhost:5432"
-def test_product_count():
+def test_table_counts():
     """
     Test the overall product count
     """
-    db = create_engine(db_string)
-    main(db)
-    assert get_product_count(db) == (500000,)
-    assert get_duplicate_count(db) == (0,)
+    number_of_test_run = 2 # Run the pipeline twice
+    for i in range(number_of_test_run):
+        dp = DataPipeline()
+        dp.run()
 
-
-def test_product_count_second_run():
-    """
-    Test the overall product run again
-    """
-    db = create_engine(db_string)
-    main(db)
-    assert get_product_count(db) == (500000,)
-    assert get_duplicate_count(db) == (0,)
+    dp = DataPipeline()
+    assert dp.get_product_count() == (500000,)
+    assert dp.get_duplicate_count(from_table="products") == (0,)
+    dp.close()
