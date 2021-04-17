@@ -7,6 +7,9 @@ on:
       - try
 
 jobs:
+  runner-job:
+  runs-on: ubuntu-latest
+
   services:
     postgres:
       image: postgres
@@ -17,15 +20,17 @@ jobs:
         --health-interval 10s
         --health-timeout 5s
         --health-retries 5
+      ports:
+        - 5432:5432
 
   steps:
     - name: Check out repository code
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r requirement.txt
 
-    - name: Run test
+    - name: Connect to PostgreSQL
       run: |
         bash download_products.bash
         py.test
