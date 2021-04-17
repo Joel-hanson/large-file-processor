@@ -1,5 +1,4 @@
 name: The iceberg data collection
-
 on:
   push:
     branches:
@@ -8,29 +7,29 @@ on:
 
 jobs:
   runner-job:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  services:
-    postgres:
-      image: postgres
-      env:
-        POSTGRES_PASSWORD: password
-      options: >-
-        --health-cmd pg_isready
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
-      ports:
-        - 5432:5432
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
 
-  steps:
-    - name: Check out repository code
-      uses: actions/checkout@v2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: pip install -r requirement.txt
+      - name: Install dependencies
+        run: pip install -r requirement.txt
 
-    - name: Connect to PostgreSQL
-      run: |
-        bash download_products.bash
-        py.test
+      - name: Connect to PostgreSQL
+        run: |
+          bash download_products.bash
+          py.test
