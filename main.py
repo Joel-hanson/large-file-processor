@@ -101,7 +101,7 @@ class DataPipeline:
         logging.debug("Copying data to staging servers....")
         copy_data_query = """
             COPY temp_products (name, sku, description)
-            FROM 'products.csv'
+            FROM '/data/products.csv'
             CSV 
             HEADER
         """

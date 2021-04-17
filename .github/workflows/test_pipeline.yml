@@ -19,6 +19,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+          --volume "$(pwd)":/data
         ports:
           - 5432:5432
 
@@ -32,7 +33,7 @@ jobs:
       - name: Download products csv file
         run: |
           bash download_products.bash
-          ls
+          printenv
 
       - name: Connect to PostgreSQL
         run: py.test
