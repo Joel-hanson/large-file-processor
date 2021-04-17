@@ -1,0 +1,31 @@
+name: The iceberg data collection
+
+on:
+  push:
+    branches:
+      - main
+      - try
+
+jobs:
+  services:
+    postgres:
+      image: postgres
+      env:
+        POSTGRES_PASSWORD: password
+      options: >-
+        --health-cmd pg_isready
+        --health-interval 10s
+        --health-timeout 5s
+        --health-retries 5
+
+  steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run test
+      run: |
+        bash download_products.bash
+        py.test
