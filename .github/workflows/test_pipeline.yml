@@ -30,7 +30,9 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Download products csv file
-        run: bash download_products.bash
+        run: |
+          bash download_products.bash
+          ls
 
       - name: Connect to PostgreSQL
         run: py.test
