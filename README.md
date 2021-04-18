@@ -56,7 +56,7 @@ To run the whole pipeline.
 - `products` (Main single table)
 - `temp_products` (This is the staging table which will be deleted after run - TEMPORARY TABLE)
 - `aggregate_product_count` (The aggregate table which has the name and also the no. of products)
-- `aggregate_product_count` (The temp aggregate table which has same schema as the `aggregate_product_count` but the difference is this is the staging server to update or insert if necessary to the main table)
+- `temp_aggregate_product_count` (The temp aggregate table which has same schema as the `aggregate_product_count` but the difference is this is the staging server to update or insert if necessary to the main table)
 
 The schema of the table `products` and `temp_products` are the same.
 
