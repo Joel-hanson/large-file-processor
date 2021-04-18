@@ -6,7 +6,7 @@ on:
       - try
 
 jobs:
-  runner-job:
+  test-job:
     runs-on: ubuntu-latest
 
     services:
@@ -35,9 +35,9 @@ jobs:
 
       - name: Run basic tests
         run: |
+          python main.py
           py.test
           ls
-
 
       - name: Save the logfile
         uses: actions/upload-artifact@v2
