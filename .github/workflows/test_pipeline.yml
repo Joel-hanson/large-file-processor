@@ -34,10 +34,13 @@ jobs:
         run: bash download_products.bash
 
       - name: Run basic tests
-        run: py.test
+        run: |
+          py.test
+          ls
+
 
       - name: Save the logfile
         uses: actions/upload-artifact@v2
         with:
           name: Log File
-          path: logfile.log
+          path: /home/runner/work/large-file-processor-postman/large-file-processor-postman/logfile.log
