@@ -1,4 +1,5 @@
 import logging
+import os.path
 
 from sqlalchemy import create_engine
 
@@ -69,6 +70,13 @@ class DataPipeline:
         logging.debug("-------------------------------  ")
         self.close()
 
+    def check_if_product_file_exists(self):
+        if os.path.isfile('products.csv'):
+            logging.debug("File exist")
+        else:
+            logging.exception("Products.csv file does not exist")
+            raise Exception("Products.csv file does not exist")
+
     def create_tables(self):
         """
         This method will create the table product and also the staging server called the temp_products as a temporary table which has the same schema as products.
@@ -97,6 +105,8 @@ class DataPipeline:
         The data from the csv is copied into the staging table temp_products after creating the tables
         """
         self.create_tables()
+
+        self.check_if_product_file_exists()
 
         logging.debug("Copying data to staging servers....")
         copy_data_query = """
@@ -236,6 +246,20 @@ class DataPipeline:
         result = self.connection.execute(select_from_aggregate_query)
         for row in result:
             logging.debug(row)
+
+    def get_aggregate_table_result_count(self):
+        """
+        Method to get sample aggregate result from aggregate_product_count table.
+        """
+        get_count_query = """
+            SELECT count(*) FROM aggregate_product_count;
+        """.format(
+            self.query_limit
+        )
+        result = list(self.connection.execute(get_count_query))
+        for count in result:
+            logging.debug("There are {} aggregates".format(*count))
+            return count
 
     def create_aggregate_table(self):
         """
