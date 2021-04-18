@@ -95,11 +95,17 @@ dp.create_tables()
 - Using this single products table create a aggregate table having the count of products that each user baught.
 
 1. The products table has 500000
+
 Sample:
-<!--- needed --->
+
+![Screenshot 2021-04-16 at 2 41 17 PM](https://user-images.githubusercontent.com/17215044/115135691-ec1e8280-a037-11eb-8129-bebe2064c027.png)
+
 2. The aggregate table has 222024
+
 Sample:
-<!--- needed --->
+
+![Screenshot 2021-04-16 at 2 40 54 PM](https://user-images.githubusercontent.com/17215044/115135698-f9d40800-a037-11eb-9cb5-17428dcd1a0c.png)
+
 #### d. Nothing is pending to be done in the points to achieve.
 
 Making of the column sku a primary key is done in the following manner.
