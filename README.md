@@ -1,3 +1,5 @@
+[![The iceberg data collection](https://github.com/Joel-hanson/large-file-processor-postman/actions/workflows/test_pipeline.yml/badge.svg)](https://github.com/Joel-hanson/large-file-processor-postman/actions/workflows/test_pipeline.yml)
+
 <h1 align="center">
   Large File Processor
 </h1>
@@ -13,6 +15,8 @@
 1. Python (3.6, 3.7, 3.8, 3.9)
 2. SQLAlchemy (1.4.7)
 3. Docker
+4. Postgres
+
 
 ## Prerequisite
 
@@ -33,6 +37,10 @@
 `docker exec -it postman-postgres psql -U postgres`
 
 ## Usage
+
+To pull the products csv file from the drive.
+
+`bash download_products.bash`
 
 To run the whole pipeline.
 
@@ -71,8 +79,9 @@ CREATE TABLE IF NOT EXISTS products (name TEXT, sku TEXT PRIMARY KEY, descriptio
 CREATE TEMPORARY TABLE temp_products (LIKE products)
 CREATE TABLE IF NOT EXISTS aggregate_product_count (name TEXT, "no. of products" INTEGER)
 ```
+OR
 
-2. Run using the defined class
+2. Run using the python method
 
 ```python
 from main import DataPipeline
@@ -83,9 +92,31 @@ dp.create_tables()
 
 #### c. Everything from points to achieve is done.
 
+- First I extract ever data into a staging table where we could do some initial transforms.
+- After the transformations load those data into a single table with sku as primary key.
+- Using this single products table create a aggregate table having the count of products that each user baught.
+
 1. The products table has 500000
+
 Sample:
-<!--- needed --->
+
+![Screenshot 2021-04-16 at 2 40 54 PM](https://user-images.githubusercontent.com/17215044/115135698-f9d40800-a037-11eb-9cb5-17428dcd1a0c.png)
+
 2. The aggregate table has 222024
+
 Sample:
-<!--- needed --->
+
+![Screenshot 2021-04-16 at 2 41 17 PM](https://user-images.githubusercontent.com/17215044/115135691-ec1e8280-a037-11eb-8129-bebe2064c027.png)
+
+#### d. Nothing is pending to be done in the points to achieve.
+
+Making of the column sku a primary key is done in the following manner.
+
+1. First I took the duplicate sku from the staging table.
+2. These duplicate sku where updated to have a suffix like `-dup-1` or `-dup-2`, etc... This was done so that we don't have to remove duplicate primary key data and its easy to find the duplicate row by checking the sku text with the suffix of `-dup-`. The number in the end is to indicate the current number of the duplicated sku.
+3. This data is updated into the products table.
+
+#### e. The improvements.
+
+- I would have looked into how to do this with apache spark or any other framework that support parallel ingestion.
+- I would have looked into alternative ways of handling the duplicate values in sku.

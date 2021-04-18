@@ -17,4 +17,6 @@ def test_table_counts():
     dp = DataPipeline()
     assert dp.get_product_count() == (500000,)
     assert dp.get_duplicate_count(from_table="products") == (0,)
+    assert dp.get_aggregate_table_result_count() == (222024, )
+    222024
     dp.close()
