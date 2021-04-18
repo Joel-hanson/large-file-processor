@@ -1,3 +1,5 @@
+[![The iceberg data collection](https://github.com/Joel-hanson/large-file-processor-postman/actions/workflows/test_pipeline.yml/badge.svg)](https://github.com/Joel-hanson/large-file-processor-postman/actions/workflows/test_pipeline.yml)
+
 <h1 align="center">
   Large File Processor
 </h1>

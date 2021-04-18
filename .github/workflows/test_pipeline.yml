@@ -1,4 +1,4 @@
-name: The iceberg data collection
+name: The Large File Processing Pipeline
 on:
   push:
     branches:
