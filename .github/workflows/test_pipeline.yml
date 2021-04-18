@@ -33,7 +33,7 @@ jobs:
       - name: Download products csv file
         run: bash download_products.bash
 
-      - name: Connect to PostgreSQL
+      - name: Run basic tests
         run: py.test
 
       - name: Save the logfile
