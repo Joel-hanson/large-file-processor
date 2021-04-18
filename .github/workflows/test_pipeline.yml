@@ -31,9 +31,13 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Download products csv file
-        run: |
-          bash download_products.bash
-          printenv
+        run: bash download_products.bash
 
       - name: Connect to PostgreSQL
         run: py.test
+
+      - name: Save the logfile
+        uses: actions/upload-artifact@v2
+        with:
+          name: Log File
+          path: logfile.log
